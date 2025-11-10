@@ -4,19 +4,23 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function ChampionshipLanding() {
+  // 🕒 Next Match Info
+  const nextMatch = {
+    teams: "Austin 🇮🇹 vs Leo 🇧🇷",
+    time: "Today • 3:45 PM",
+    stage: "Quarter Final",
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden font-sans text-white">
       {/* 🔥 Background Layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#00152E] via-[#011B44] to-[#122860]" />
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,215,0,0.2)_0%,transparent_70%)]" />
       <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_90%,rgba(255,0,0,0.2)_0%,transparent_70%)]" />
-
-      {/* 🎆 Stadium light beams */}
       <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,0.07)_0%,transparent_60%),linear-gradient(-115deg,rgba(255,255,255,0.07)_0%,transparent_60%)] opacity-60" />
 
       {/* ✨ Hero Section */}
       <section className="relative z-10 flex flex-col items-center justify-center text-center py-32 px-6">
-        {/* Shining Title */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,24 +32,39 @@ export default function ChampionshipLanding() {
           <span className="text-yellow-400">CHAMPIONSHIP</span>
         </motion.h1>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mt-6 text-xl md:text-2xl text-yellow-100 max-w-2xl"
         >
-          Cambridge Kids Club brings the magic of the FIFA 26 World Cup to our young
-          stars! 🌍
+          Cambridge Kids Club brings the magic of the FIFA 26 World Cup to our young stars! 🌍
           <br />
           Dream big. Play fair. Celebrate like legends.
         </motion.p>
+
+        {/* 🕓 Next Match Display */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="mt-12 text-center bg-white/10 backdrop-blur-lg border border-yellow-300/30 rounded-2xl p-6 w-[320px] shadow-[0_0_25px_rgba(255,215,0,0.3)]"
+        >
+          <p className="text-sm uppercase text-yellow-400 tracking-widest font-semibold">
+            Next Match
+          </p>
+          <p className="text-2xl font-extrabold text-yellow-200 mt-2 drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]">
+            {nextMatch.teams}
+          </p>
+          <p className="text-yellow-100 mt-1 font-medium">{nextMatch.stage}</p>
+          <p className="text-gray-300 mt-1 text-sm">{nextMatch.time}</p>
+        </motion.div>
 
         {/* Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 1.6 }}
           className="mt-10 flex flex-wrap gap-6 justify-center"
         >
           <Link href="pages/brackets">
@@ -57,47 +76,31 @@ export default function ChampionshipLanding() {
 
         {/* ⚡ Stadium Spark & Confetti Glow */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Golden shimmer waves */}
           <motion.div
             animate={{
               scale: [1, 1.25, 1],
               opacity: [0.5, 0.9, 0.5],
               rotate: [0, 10, -10, 0],
             }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[15%] left-[45%] w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(255,215,0,0.25)_0%,transparent_70%)] blur-[100px]"
           />
-
-          {/* Blue & red flares for team color ambience */}
           <motion.div
             animate={{
               scale: [1, 1.15, 1],
               opacity: [0.3, 0.8, 0.3],
               rotate: [0, -12, 12, 0],
             }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-[20%] right-[30%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(0,150,255,0.3)_0%,transparent_70%)] blur-[120px]"
           />
-
           <motion.div
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.8, 0.3],
               rotate: [0, 15, -15, 0],
             }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-[25%] left-[25%] w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(255,0,0,0.25)_0%,transparent_70%)] blur-[120px]"
           />
         </div>

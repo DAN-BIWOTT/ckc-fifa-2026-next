@@ -4,52 +4,54 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 
-export default function brackets() {
-  const quarterFinals = [
-    { id: 1, p1: "Patrick 🇫🇷", p2: "Toma 🇪🇸", winner: "Patrick 🇫🇷" },
-    { id: 2, p1: "Leo P 🇧🇷", p2: "Alexi 🇦🇷", winner: "Leo P 🇧🇷" },
-    { id: 3, p1: "Nicolas 🇩🇪", p2: "Austin 🏴", winner: "Nicolas 🇩🇪" },
-    { id: 4, p1: "X 🇯🇵", p2: "Jude 🇮🇹", winner: "X 🇯🇵" },
-  ];
-
-  const semiFinals = [
-    { id: 1, p1: "Patrick 🇫🇷", p2: "Leo P 🇧🇷", winner: "Patrick 🇫🇷" },
-    { id: 2, p1: "Nicolas 🇩🇪", p2: "X 🇯🇵", winner: "X 🇯🇵" },
-  ];
-
-  const final = { p1: "?", p2: "X 🇯🇵", winner: "?" };
+export default function BracketsPage() {
+  const rounds = {
+    round1: [
+      { id: 1, p1: "Elbin 🇫🇷", s1: 0, p2: "Patrick 🇧🇪", s2: 1, winner: "Patrick 🇧🇪" },
+      { id: 2, p1: "Tomas 🇪🇸", s1: 0, p2: "Alexi 🇦🇷", s2: 0, winner: "Alexi 🇦🇷" },
+      { id: 3, p1: "Leo 🇧🇷", s1: 4, p2: "William 🏴", s2: 1, winner: "Leo 🇧🇷" },
+      { id: 4, p1: "Nicolas 🇩🇪", s1: 1, p2: "Austin 🇮🇹", s2: 2, winner: "Austin 🇮🇹" },
+      { id: 6, p1: "Matteo 🇨🇦", s1: 1, p2: "Jakub 🇧🇷", s2: 2, winner: "Jakub 🇧🇷" },
+    ],
+    quarters: [
+      { id: 1, p1: "Patrick 🇧🇪", s1: 1, p2: "Alexi 🇦🇷", s2: 0, winner: "Patrick 🇧🇪" },
+      { id: 2, p1: "", s1: "", p2: "Austin 🇺🇸 vs Leo 🇧🇷", s2: "", winner: "Austin 🇺🇸 vs Leo 🇧🇷" },
+      { id: 3, p1: "", s1: "", p2: "Jakub 🇧🇷 vs ??", s2: "", winner: "Jakub 🇧🇷 vs ??" },
+    ],
+    semis: [
+      { id: 1, p1: "Patrick 🇧🇪 vs ??", s1: "", p2: "", s2: "", winner: "Patrick 🇧🇪 vs ??" },
+      { id: 2, p1: "?? vs ??", s1: "", p2: "", s2: "", winner: "?? vs ??" },
+    ],
+    final: { p1: "??? VS ???", s1: "", p2: "", s2: "", winner: "??? 🏆" },
+  };
 
   const MatchCard = ({
-    p1,
-    p2,
-    winner,
+    p1, s1, p2, s2, winner,
   }: {
-    p1: string;
-    p2: string;
-    winner: string;
+    p1: string; s1: number | string; p2: string; s2: number | string; winner: string;
   }) => {
     const loserStyle =
-      "relative text-gray-400 line-through decoration-2 decoration-red-500/60";
+      "relative text-gray-400 line-through decoration-2 decoration-red-500/60 text-sm";
     const winnerStyle =
-      "text-yellow-300 font-bold drop-shadow-[0_0_8px_rgba(255,215,0,0.7)]";
+      "text-yellow-300 font-bold text-sm drop-shadow-[0_0_5px_rgba(255,215,0,0.6)]";
 
     return (
-      <motion.div
-        whileHover={{ scale: 1.04 }}
-        transition={{ type: "spring", stiffness: 250 }}
-      >
-        <Card className="bg-gradient-to-r from-[#ffffff0d] to-[#ffffff1a] backdrop-blur-sm border border-white/10 p-4 rounded-xl shadow-md hover:border-yellow-300/30 transition relative overflow-hidden">
-          <div className="flex flex-col gap-1 text-lg text-left">
-            <span className={winner === p1 ? winnerStyle : loserStyle}>{p1}</span>
-            <span className={winner === p2 ? winnerStyle : loserStyle}>{p2}</span>
+      <motion.div whileHover={{ scale: 1.03 }}>
+        <Card className="bg-[#0a1735]/70 border border-yellow-300/20 px-3 py-2 rounded-md shadow-md relative w-48">
+          <div className="flex flex-col text-left leading-tight">
+            <span className={winner === p1 ? winnerStyle : loserStyle}>
+              {p1} <span className="float-right text-white/70">{s1}</span>
+            </span>
+            <span className={winner === p2 ? winnerStyle : loserStyle}>
+              {p2} <span className="float-right text-white/70">{s2}</span>
+            </span>
           </div>
-
           {winner !== "?" && (
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="absolute bottom-0 left-0 h-[3px] w-full bg-gradient-to-r from-yellow-400 via-yellow-200 to-transparent"
+              className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-yellow-400 via-yellow-200 to-transparent"
             />
           )}
         </Card>
@@ -58,82 +60,90 @@ export default function brackets() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-white font-sans">
-      {/* Background lights */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#030b1b] via-[#0a1740] to-[#08142d]" />
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/30 rounded-full blur-[200px] animate-pulse" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-yellow-400/20 rounded-full blur-[200px] animate-pulse" />
-
-      {/* Header */}
-      <header className="relative z-10 flex justify-between items-center px-8 pt-6 mb-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#030b1b] via-[#0a1740] to-[#08142d] text-white font-sans overflow-x-auto">
+      <header className="text-center py-10">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-white to-yellow-400 drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]"
+          className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-white to-yellow-400"
         >
-          CKC FIFA 2026 BRACKETS
+          CKC FIFA 26 TOURNAMENT
         </motion.h1>
-
-        <Link
-          href="/"
-          className="text-yellow-300 font-semibold hover:text-yellow-200 transition underline"
-        >
-          ← Back
+        <p className="text-yellow-200 mt-2 text-sm tracking-wider">Powered by Cambridge Kids Club</p>
+        <Link href="/" className="inline-block mt-4 text-yellow-400 underline text-sm hover:text-yellow-200">
+          ← Back to Home
         </Link>
       </header>
 
-      {/* Brackets Grid */}
-      <div className="relative z-10 flex justify-center items-start">
-        <div className="grid grid-cols-3 gap-20 min-w-[1000px] text-center">
-          {/* Quarter Finals */}
-          <div>
-            <h2 className="text-2xl font-bold mb-8 text-yellow-300 uppercase tracking-widest">
-              Quarter Finals
-            </h2>
-            <div className="space-y-6">
-              {quarterFinals.map((q) => (
-                <MatchCard key={q.id} p1={q.p1} p2={q.p2} winner={q.winner} />
-              ))}
-            </div>
-          </div>
+      {/* Tournament Layout */}
+     {/* Tournament Layout with Connector Lines */}
+<div className="relative flex justify-center gap-20 px-10 pb-20">
 
-          {/* Semi Finals */}
-          <div>
-            <h2 className="text-2xl font-bold mb-8 text-yellow-300 uppercase tracking-widest">
-              Semi Finals
-            </h2>
-            <div className="space-y-16 mt-8">
-              {semiFinals.map((s) => (
-                <MatchCard key={s.id} p1={s.p1} p2={s.p2} winner={s.winner} />
-              ))}
-            </div>
-          </div>
+  {/* === COLUMN 1: Round 1 === */}
+  <div className="flex flex-col justify-around gap-4 relative">
+    {rounds.round1.map((m) => (
+      <MatchCard key={m.id} {...m} />
+    ))}
+    {/* right connector to Quarter Finals */}
+    <div className="absolute top-0 right-[-40px] h-full w-[2px] bg-gradient-to-b from-blue-500 via-cyan-300 to-blue-500 rounded-full animate-pulse" />
+  </div>
 
-          {/* Final */}
-          <div className="flex flex-col items-center justify-center mt-10">
-            <h2 className="text-2xl font-bold mb-8 text-yellow-300 uppercase tracking-widest">
-              Final
-            </h2>
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="relative"
-            >
-              <div className="absolute -inset-8 bg-[conic-gradient(from_0deg,rgba(255,255,255,0.1),rgba(255,215,0,0.3),transparent_80%)] blur-[80px] animate-spin-slow rounded-full" />
+  {/* === COLUMN 2: Quarter Finals === */}
+  <div className="flex flex-col justify-around gap-12 relative">
+    {rounds.quarters.map((m) => (
+      <MatchCard key={m.id} {...m} />
+    ))}
+    {/* connecting arcs to Semi Finals */}
+    <svg
+      className="absolute right-[-60px] top-0 h-full w-[60px]"
+      viewBox="0 0 60 600"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M2 50 C30 80, 30 120, 58 150
+           M2 250 C30 280, 30 320, 58 350
+           M2 450 C30 480, 30 520, 58 550"
+        stroke="url(#grad1)"
+        strokeWidth="3"
+        fill="none"
+        strokeLinecap="round"
+        className="animate-pulse"
+      />
+      <defs>
+        <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#00C6FF" />
+          <stop offset="100%" stopColor="#0072FF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
 
-              <Card className="relative z-10 bg-yellow-500 text-black p-10 rounded-2xl text-3xl font-extrabold shadow-[0_0_30px_rgba(255,215,0,0.6)] border border-yellow-200">
-                🏆 {final.p1} vs {final.p2}
-              </Card>
+  {/* === COLUMN 3: Semi Finals === */}
+  <div className="flex flex-col justify-around gap-20 relative">
+    {rounds.semis.map((m) => (
+      <MatchCard key={m.id} {...m} />
+    ))}
+    {/* short connector line to Final */}
+    <div className="absolute top-[45%] right-[-50px] w-[50px] h-[3px] bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full animate-pulse" />
+  </div>
 
-              <p className="mt-6 text-yellow-100 text-xl font-semibold tracking-wide">
-                Champion: {final.winner}
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
+  {/* === COLUMN 4: Final === */}
+  <div className="flex flex-col justify-center relative">
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="relative text-center"
+    >
+      <Card className="bg-yellow-400 text-black font-extrabold text-lg px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(255,215,0,0.6)] border border-yellow-200">
+        🏆 {rounds.final.p1} {rounds.final.s1} – {rounds.final.s2} {rounds.final.p2}
+      </Card>
+      <p className="mt-4 text-yellow-100 font-semibold text-base">
+        Champion: {rounds.final.winner}
+      </p>
+    </motion.div>
+  </div>
+</div>
+
     </div>
   );
 }
